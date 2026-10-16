@@ -1,0 +1,23 @@
+/* Плагин sidebar: прятать левый список сессий, как в Jira. Цвета — только токены */
+.sbx-btn { display: none; }
+@media (min-width: 761px) {
+  .sbx-btn { display: inline-grid; place-items: center; flex: none; width: 28px; height: 28px; padding: 0; margin-left: -6px;
+    border: 0; border-radius: var(--radius); background: transparent; color: var(--muted-foreground); cursor: pointer; }
+  .sbx-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+  .sbx-btn:hover, .sbx-btn:focus-visible { background: var(--accent); color: var(--foreground); }
+  html.sbx-off .sbx-btn { color: var(--foreground); }
+
+  /* спрятанный: колонки списка нет, сам список — поверх ленты у левого края, выезжает при наведении на кнопку */
+  html.sbx-off .app { --left-w: 0px !important; grid-template-columns: minmax(0, 1fr); padding-left: var(--gap); }
+  html.sbx-off .app.with-side { grid-template-columns: minmax(0, 1fr) var(--right-w); }
+  html.sbx-off .app > .grip.left { display: none; }
+  html.sbx-off .app > aside { position: fixed; z-index: var(--z-panel); top: var(--gap); bottom: var(--gap); left: 0;
+    width: var(--sbx-w, 296px); visibility: visible; overflow: hidden; background: var(--shell);
+    border-radius: 0 var(--radius-xl) var(--radius-xl) 0; box-shadow: var(--shadow-plate), 0 8px 32px rgb(0 0 0 / .18);
+    transform: translateX(-105%); transition: transform var(--dur-fast) var(--ease-out); }
+  html.sbx-off.sbx-peek .app > aside { transform: none; }
+  .sbx-btn.sbx-pin { display: none; }
+  html.sbx-off .sbx-btn.sbx-pin { display: inline-grid; position: absolute; top: 20px; right: 10px; margin: 0; z-index: 1;
+    background: var(--card); box-shadow: var(--shadow-plate); }
+  html.sbx-off .sbx-btn.sbx-pin:hover { background: var(--accent); }
+}
